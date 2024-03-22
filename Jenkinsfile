@@ -29,7 +29,6 @@ pipeline {
         stage('SonarQube Analysis') {
             steps{
                 script {
-                  withSonarQubeEnv('SonarQubeBenIsmail') {
                     sh 'mvn sonar:sonar'
                 }
                 }
