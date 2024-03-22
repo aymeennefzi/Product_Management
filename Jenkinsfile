@@ -25,14 +25,12 @@ pipeline {
         stage('SonarQube Analysis') {
             steps{
                 script {
-                    def scannerHome = tool 'scanner'
-                         withSonarQubeEnv {
-                         sh "${scannerHome}/bin/sonar-scanner"
-                    }
+                  withSonarQubeEnv('SonarQubeBenIsmail') {
+                    sh 'mvn sonar:sonar'
+                }
                 }
             }
         }
-
 
         stage('Maven Install') {
             steps {
