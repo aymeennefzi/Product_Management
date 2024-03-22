@@ -5,9 +5,7 @@ pipeline {
         maven 'M2_HOME'
     }
 
-    environment {
-            SCANNER_HOME = tool 'scannerHome'
-        }
+   
 
     stages {
 
@@ -29,10 +27,13 @@ pipeline {
         stage('SonarQube Analysis') {
             steps{
                 script {
-                    sh 'mvn sonar:sonar'
-                }
+                    def scannerHome = tool 'scanner'
+                    withSonarQubeEnv {
+                        sh "${scannerHome}/bin/sonar-scanner"
+                    }
                 }
             }
+        }
         stage('Maven Install') {
             steps {
                   sh 'mvn install -DskipTests=true'
