@@ -10,7 +10,7 @@ pipeline {
         stage('Checkout Git repository') {
             steps {
                 echo 'Pulling ';
-                git branch: 'master', credentialsId: 'PAT_Jenkins' , url: 'https://github.com/aymeennefzi/Devops_Project.git';
+                git branch: 'master', credentialsId: 'PAT_Jenkins' , url: 'https://github.com/aymeennefzi/Product_Management.git';
             }
         }
 
