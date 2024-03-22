@@ -33,13 +33,11 @@ pipeline {
                 }
                 }
             }
-        }
-
         stage('Maven Install') {
             steps {
                   sh 'mvn install -DskipTests=true'
             }
         }
+    }
 }
 
-}
