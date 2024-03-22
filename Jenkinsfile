@@ -5,6 +5,10 @@ pipeline {
         maven 'M2_HOME'
     }
 
+    environment {
+            SCANNER_HOME = tool 'scannerHome'
+        }
+
     stages {
 
         stage('Checkout Git repository') {
