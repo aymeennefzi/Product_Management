@@ -9,6 +9,7 @@ pipeline {
     environment {
         SCANNER_HOME = tool 'scanner'
 	SONAR_TOKEN = credentials('scanner')
+	SONAR_URL = 'http://172.16.1.70:9000'
     }
 
     stages {
@@ -49,18 +50,13 @@ pipeline {
             }
         }
 
-        stage("Sonarqube Analysis") {
-            steps {
-                withSonarQubeEnv('sonar-server') {
-                    sh ''' 
-                    $SCANNER_HOME/bin/scanner 
-                    -Dsonar.projectName=DevopsProject 
-                    -Dsonar.java.binaries=target/classes
-                    -Dsonar.projectKey=devops
-                    -Dsonar.login=$SONAR_TOKEN
-                    '''
-                }
-            }
+         stage('SonarQube analysis') {
+    steps {
+        script {
+            sh "mvn sonar:sonar -Dsonar.login=${SONAR_TOKEN} -Dsonar.host.url=${SONAR_URL}"
         }
+    }
+}
+
     }
 }
