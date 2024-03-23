@@ -20,6 +20,30 @@ pipeline {
                 sh 'mvn compile'
             }
         }
+	stage('Tests - JUnit/Mockito') {
+            steps {
+                sh 'mvn test'
+            }
+        }
+	stage('Build package') {
+            steps {
+                sh 'mvn package'
+            }
+        }
+	
+	stage('Maven Install') {
+            steps {
+                sh 'mvn install'
+            }
+        }
+	stage('Rapport JaCoCo') {
+            steps {
+                sh 'mvn test'
+                sh 'mvn jacoco:report'
+            }
+        }
+	
+	
     }
 }
 
