@@ -13,6 +13,13 @@ pipeline {
             }
         }
 
-      }
+        stage('Maven Clean Compile') {
+            steps {
+                sh 'mvn clean'
+                echo 'Running Maven Compile'
+                sh 'mvn compile'
+            }
+        }
+    }
 }
 
