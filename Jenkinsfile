@@ -8,6 +8,7 @@ pipeline {
 
     environment {
         SCANNER_HOME = tool 'scanner'
+	SONAR_TOKEN = credentials('scanner')
     }
 
     stages {
@@ -56,7 +57,7 @@ pipeline {
                     -Dsonar.projectName=DevopsProject 
                     -Dsonar.java.binaries=target/classes
                     -Dsonar.projectKey=devops
-                    -Dsonar.login=squ_e4fbd64375e75171a68a792d1449dec732919d79
+                    -Dsonar.login=$SONAR_TOKEN
                     '''
                 }
             }
