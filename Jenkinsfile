@@ -4,9 +4,6 @@ pipeline {
     tools {
         maven 'M2_HOME'
     }
-
-   
-
     stages {
 
         stage('Checkout Git repository') {
@@ -16,29 +13,6 @@ pipeline {
             }
         }
 
-        stage('Maven Clean Compile') {
-            steps {
-                sh 'mvn clean'
-                echo 'Running Maven Compile'
-                sh 'mvn compile'
-            }
-        }
-
-        stage('SonarQube Analysis') {
-            steps{
-                script {
-                    def scannerHome = tool 'scanner'
-                    withSonarQubeEnv {
-                        sh "${scannerHome}/bin/sonar-scanner"
-                    }
-                }
-            }
-        }
-        stage('Maven Install') {
-            steps {
-                  sh 'mvn install -DskipTests=true'
-            }
-        }
-    }
+      }
 }
 
