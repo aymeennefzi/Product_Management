@@ -2,10 +2,8 @@ pipeline {
     agent any
 
     tools {
-        // Assurez-vous que 'M2_HOME' est correctement configuré dans Jenkins
         maven 'M2_HOME'
-        // Assurez-vous que 'scanner' est correctement configuré dans Jenkins
-        tool 'scanner', 'scanner'
+        
     }
 
     environment {
