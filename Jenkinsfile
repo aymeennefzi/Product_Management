@@ -10,7 +10,7 @@ pipeline {
         SCANNER_HOME = tool 'scanner'
         SONAR_TOKEN = credentials('scanner')
         SONAR_URL = 'http://172.16.1.70:9000'
-        DOCKERHUB_TOKEN = credentials('dockerhub_token')
+        DOCKERHUB_TOKEN = credentials('dockerhub')
     }
 
     stages {
@@ -73,7 +73,7 @@ pipeline {
         stage('Push Docker Image to DockerHub') {
             steps {
                 script {
-                    docker.withRegistry('https://index.docker.io/v1/', 'dockerhub_token') {
+                    docker.withRegistry('https://index.docker.io/v1/', 'dockerhub') {
                         def dockerImage = docker.image('aymennefzi99/product_management:latest')
                         dockerImage.push()
                     }
