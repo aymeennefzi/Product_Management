@@ -65,7 +65,7 @@ pipeline {
         stage('Build Docker Image (DevOps_Project)') {
              steps {
                  script {
-                     def dockerImage=docker.build("Aymen_Devops_Project")
+                     def dockerImage=docker.build("Product_management" , "-f Dockerfile .")
                  }
              }
         }
