@@ -76,6 +76,7 @@ pipeline {
                    withCredentials([string(credentialsId: 'dockerhub', variable: 'dockerpwd')]) {
                        sh '''
                        docker login -u aymennefzi99 -p "$dockerpwd"
+                       docker tag product_management:latest aymennefzi99/product_management:latest
                        docker push aymennefzi99/product_management:latest
                        '''
                    }
