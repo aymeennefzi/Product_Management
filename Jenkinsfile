@@ -70,15 +70,19 @@ pipeline {
                  }
              }
         }
-        stage('Push Docker Image to DockerHub') {
-            steps {
-                script {
-                    docker.withRegistry('https://index.docker.io/v1/', 'dockerhub') {
-                        def dockerImage = docker.image('aymennefzi99/product_management:latest')
-                        dockerImage.push()
-                    }
-                }
-            }
-        }
+       stage('Push Docker Image to DockerHub') {
+           steps {
+               script {
+                   withCredentials([string(credentialsId: 'dockerhub', variable: 'dockerpwd')]) {
+                       sh '''
+                       docker login -u aymennefzi99 -p "$dockerpwd"
+                       docker push aymennefzi99/product_management:latest
+                       '''
+                   }
+               }
+           }
+       }
+
     }
+
 }
