@@ -10,8 +10,7 @@ pipeline {
         SCANNER_HOME = tool 'scanner'
         SONAR_TOKEN = credentials('scanner')
         SONAR_URL = 'http://172.16.1.70:9000'
-        DOCKERHUB_CREDENTIALS = credentials('dockerhub_token')
-        DOCKER_IMAGE = 'aymennefzi99/product_management:latest'
+        DOCKERHUB_TOKEN = credentials('dockerhub_token')
     }
 
     stages {
@@ -73,11 +72,16 @@ pipeline {
         }
         stage('Push Docker Image to DockerHub') {
              steps {
-                 script {
-                     docker.withRegistry('', DOCKERHUB_CREDENTIALS) {
-                     docker.image(DOCKER_IMAGE).push()
-                     }
-                 }
+                  script {
+                      withCredentials([string(credentialsId: 'dockerhub_token', variable: 'dockerpwd')]) {
+                          docker.withRegistry('', 'dockerhub') {
+                                sh '''
+                                docker login -u aymennefzi99 -p "$dockerpwd"
+                                docker push aymennefzi99/product_management:latest
+                                '''
+                          }
+                      }
+                  }
              }
         }
     }
