@@ -72,8 +72,8 @@ pipeline {
         stage('Push Docker Image to DockerHub') {
             steps {
                 script {
-                    withCredentials([string(credentialsId: 'dockerhub', variable: 'dockerpwd')]) {
-                        docker.withRegistry('https://index.docker.io/v1/', 'dockerhub') {
+                    withCredentials([string(credentialsId: 'dockerhub_token', variable: 'dockerpwd')]) {
+                        docker.withRegistry('', 'dockerhub') {
                             sh '''
                             docker login -u aymennefzi99 -p "$dockerpwd"
                             docker push aymennefzi99/product_management:latest
