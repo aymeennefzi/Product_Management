@@ -62,5 +62,13 @@ pipeline {
                 sh 'mvn deploy'
             }
         }
+        stage('Build Docker Image (DevOps_Project)') {
+             steps {
+                 script {
+                     sh 'sudo chmod 666 /var/run/docker.sock'
+                     def dockerImage=docker.build("Aymen_Devops_Project")
+                 }
+             }
+        }
     }
 }
