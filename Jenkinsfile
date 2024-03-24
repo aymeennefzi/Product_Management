@@ -51,12 +51,16 @@ pipeline {
         }
 
          stage('SonarQube analysis') {
-    steps {
-        script {
-            sh "mvn sonar:sonar -Dsonar.login=${SONAR_TOKEN} -Dsonar.host.url=${SONAR_URL}"
+            steps {
+                script {
+                    sh "mvn sonar:sonar -Dsonar.login=${SONAR_TOKEN} -Dsonar.host.url=${SONAR_URL}"
+                }
+            }
         }
-    }
-}
-
+        stage('Deploy to Nexus') {
+            steps {
+                sh 'mvn deploy'
+            }
+        }
     }
 }
