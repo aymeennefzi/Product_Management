@@ -8,8 +8,8 @@ pipeline {
 
     environment {
         SCANNER_HOME = tool 'scanner'
-	SONAR_TOKEN = credentials('scanner')
-	SONAR_URL = 'http://172.16.1.70:9000'
+        SONAR_TOKEN = credentials('scanner')
+        SONAR_URL = 'http://172.16.1.70:9000'
     }
 
     stages {
