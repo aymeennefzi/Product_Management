@@ -29,3 +29,8 @@ services:
       - "3306:3306"
     restart: unless-stopped
 
+  produit_frontend:
+    image: aymennefzi99/product_management_frontend
+    ports:
+      - "4200:80"  
+    restart: always 

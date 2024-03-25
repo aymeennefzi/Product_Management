@@ -93,7 +93,7 @@ pipeline {
                    def containersReady = false
                    def maxAttempts = 12
                    for (int i = 0; i < maxAttempts; i++) {
-                       sleep 10 
+                       sleep 10
                        containersReady = true
                        containersToCheck.each { container ->
                            if (!runningContainers.contains(container)) {
@@ -112,5 +112,6 @@ pipeline {
                }
            }
        }
+
     }
 }
