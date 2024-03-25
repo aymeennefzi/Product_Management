@@ -2,7 +2,7 @@ version: "3.8"
 services:
 
   produit:
-    container_name: Project
+    container_name: Product_management
     ports:
       - "8082:8082"
     build:
@@ -13,7 +13,7 @@ services:
       - SPRING_DATASOURCE_USERNAME=root
       - SPRING_DATASOURCE_PASSWORD=
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update
-
+    restart: unless-stopped
     depends_on:
       - docker-mysql
 
@@ -27,3 +27,6 @@ services:
       - MYSQL_ALLOW_EMPTY_PASSWORD=true
     ports:
       - "3306:3306"
+    restart: unless-stopped
+    volumes:
+      - db:/var/lib/mysql
