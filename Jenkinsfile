@@ -86,7 +86,6 @@ pipeline {
        stage('Docker compose ') {
             steps {
                 script {
-                    sh 'sudo systemctl stop mysql'
                     sh 'docker-compose up -d'
                 }
             }
