@@ -83,12 +83,34 @@ pipeline {
                }
            }
        }
-       stage('Docker compose ') {
-            steps {
-                script {
-                    sh 'docker-compose up -d'
-                }
-            }
+       stage('Docker compose') {
+           steps {
+               script {
+                   sh 'docker-compose up -d'
+                   def runningContainers = sh(script: "docker ps --format '{{.Names}}'", returnStdout: true).trim()
+                   echo "Conteneurs en cours d'exécution : ${runningContainers}"
+                   def containersToCheck = ["nom_du_conteneur_1", "nom_du_conteneur_2", "nom_du_conteneur_3"]
+                   def containersReady = false
+                   def maxAttempts = 12
+                   for (int i = 0; i < maxAttempts; i++) {
+                       sleep 10 
+                       containersReady = true
+                       containersToCheck.each { container ->
+                           if (!runningContainers.contains(container)) {
+                               containersReady = false
+                           }
+                       }
+                       if (containersReady) {
+                           break
+                       }
+                   }
+                   if (containersReady) {
+                       echo "Tous les conteneurs sont en cours d'exécution."
+                   } else {
+                       echo "Certains conteneurs ne sont pas en cours d'exécution."
+                   }
+               }
+           }
        }
     }
 }
