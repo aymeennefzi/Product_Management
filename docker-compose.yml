@@ -30,8 +30,8 @@ services:
     restart: unless-stopped
 
   produit_frontend:
-    image: 649bffba1501c32f70d0e3c1d1cac5fee7ff5277c41fbbdb6286041ea3974494
+    image: aymennefzi99/productmanagement
     ports:
-      - "4200:5000"
+      - "4200:4200"
     restart: always
 
