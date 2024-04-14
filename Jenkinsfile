@@ -63,7 +63,7 @@ pipeline {
                 sh 'mvn deploy'
             }
         }
-        stage('Build Docker Image (DevOps_Project)') {
+        stage('Build Docker Image') {
              steps {
                  script {
                      def dockerImage=docker.build("product_management" , "-f Dockerfile .")
@@ -126,5 +126,40 @@ pipeline {
                 }
             }
         }
+        stage('Email Notification') {
+            steps{
+                mail bcc: '', body: '''Stage: GIT Pull
+                - Pulling from Git...
+
+                Stage: Maven Clean Compile
+                - Building Spring project...
+
+                Stage: Tests - JUnit/Mockito
+                - Testing Spring project...
+
+                Stage: SonarQube analysis
+                - Running Sonarqube analysis...
+
+                Stage: Deploy to Nexus
+                - Deploying to Nexus...
+
+                Stage: Build Docker Image
+                - Building Docker image for the application...
+
+                Stage: Push Docker Image to DockerHub
+                - Pushing Docker image to Docker Hub...
+
+                Stage: Docker Compose
+                - Running Docker Compose...
+
+                Stage: Start prometheus
+                - Starting Prometheus...
+
+                 Stage: Start Grafana
+                - Starting Grafana...
+
+                Final Report: The pipeline has completed successfully. No action required''', cc: '', from: '', replyTo: '', subject: 'Succès de la pipeline Product management - Project ', to: 'aymennefzi67@gmail.com'
+            }
+         }
     }
 }
