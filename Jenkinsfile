@@ -125,21 +125,41 @@ pipeline {
                     sh 'docker start 39a8a09167e6'
                 }
             }
-        }   
-    }
-    post {
-        failure {
-            script {
-                def errorLog = currentBuild.rawBuild.getLog(10).join('\n')
-                emailext body: "Il y a eu une erreur dans la pipeline. Détails de l'erreur :\n\n$errorLog",
-                subject: "Erreur dans la pipeline Product management - Project",
-                to: "aymennefzi67@gmail.com"
+        } 
+        stage('Email Notification') {
+            steps{
+                mail bcc: '', body: '''Stage: GIT Pull
+                - Pulling from Git...
+
+                Stage: Maven Clean Compile
+                - Building Spring project...
+
+                Stage: Test - JUNIT/MOCKITO
+                - Testing Spring project...
+
+                Stage: JaCoCo Report
+                - Generating JaCoCo Coverage Report...
+
+                Stage: SonarQube Analysis
+                - Running Sonarqube analysis...
+
+                Stage: Deploy to Nexus
+                - Deploying to Nexus...
+
+                Stage: Build Docker Image
+                - Building Docker image for the application...
+
+                Stage: Push Docker Image
+                - Pushing Docker image to Docker Hub...
+
+                Stage: Docker Compose
+                - Running Docker Compose...
+
+                Stage: Monitoring Services G/P
+                - Starting Prometheus and Grafana...
+
+                Final Report: The pipeline has completed successfully. No action required''', cc: '', from: '', replyTo: '', subject: 'Succès de la pipeline product_management-Project', to: 'aymennefzi67@gmail.com'
             }
-        }
-        success {
-            emailext body: "La pipeline s'est terminée avec succès. Aucune action requise.",
-                subject: "Succès de la pipeline Product management - Project",
-                to: "aymennefzi67@gmail.com"
-            }
+        }  
     }
 }
