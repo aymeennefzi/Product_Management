@@ -125,21 +125,21 @@ pipeline {
                     sh 'docker start 39a8a09167e6'
                 }
             }
-        }
-        post {
-            failure {
-                script {
-                    def errorLog = currentBuild.rawBuild.getLog(10).join('\n')
-                    emailext body: "Il y a eu une erreur dans la pipeline. Détails de l'erreur :\n\n$errorLog",
-                            subject: "Erreur dans la pipeline Product management - Project",
-                            to: "aymennefzi67@gmail.com"
-                }
-            }
-            success {
-                emailext body: "La pipeline s'est terminée avec succès. Aucune action requise.",
-                        subject: "Succès de la pipeline Product management - Project",
-                        to: "aymennefzi67@gmail.com"
-            }
         }   
+    }
+    post {
+        failure {
+            script {
+                def errorLog = currentBuild.rawBuild.getLog(10).join('\n')
+                emailext body: "Il y a eu une erreur dans la pipeline. Détails de l'erreur :\n\n$errorLog",
+                subject: "Erreur dans la pipeline Product management - Project",
+                to: "aymennefzi67@gmail.com"
+            }
+        }
+        success {
+            emailext body: "La pipeline s'est terminée avec succès. Aucune action requise.",
+                subject: "Succès de la pipeline Product management - Project",
+                to: "aymennefzi67@gmail.com"
+            }
     }
 }
