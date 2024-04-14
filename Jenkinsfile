@@ -112,5 +112,19 @@ pipeline {
                }
            }
        }
+       stage('Start prometheus') {
+            steps {
+                script {
+                    sh 'docker start 1d0792b4a1ee'
+                }
+            }
+        }
+        stage('Start Grafana') {
+            steps {
+                script {
+                    sh 'docker start 39a8a09167e6'
+                }
+            }
+        }
     }
 }
